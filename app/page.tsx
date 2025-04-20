@@ -59,7 +59,7 @@ export default function BatteryHealthChecker() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-sm text-gray-600">
-            Run the following command in your Windows terminal:
+            Run the following command in your Windows terminal(run as administrator):
             <code className="block bg-gray-200 p-2 mt-1">powercfg /batteryreport /output &quot;C:\\battery-report.html&quot;</code>
             After the file is generated, upload it below.
             You will find this in your Local Disk(c:)
