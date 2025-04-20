@@ -65,7 +65,7 @@ export default function BatteryHealthChecker() {
             You will find this in your Local Disk(c:)
           </p>
 
-          <Input type="file" accept=".html" onChange={handleFileChange} />
+          <Input type="file" accept=".html" onChange={handleFileChange}  className="w-full cursor-pointer"/>
           <Button onClick={parseBatteryReport}>Calculate Health</Button>
 
           {health !== null && (
