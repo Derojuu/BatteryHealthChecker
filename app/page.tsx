@@ -55,7 +55,7 @@ export default function BatteryHealthChecker() {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <Card className="w-full max-w-xl">
         <CardHeader>
-          <CardTitle>Battery Health Checker</CardTitle>
+          <CardTitle>Laptop Battery Health Checker</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-sm text-gray-600">
