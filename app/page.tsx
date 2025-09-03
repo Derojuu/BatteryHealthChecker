@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -52,29 +52,42 @@ export default function BatteryHealthChecker() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
       <Card className="w-full max-w-xl">
         <CardHeader>
           <CardTitle>Battery Health Checker</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+
+        <CardContent className="space-y-6">
           <p className="text-sm text-gray-600">
-            Run the following command in your Windows terminal:
-            <code className="block bg-gray-200 p-2 mt-1">powercfg /batteryreport /output "C:\\battery-report.html"</code>
-            After the file is generated, upload it below.
-            You will find this in your Local Disk(c:)
+            To begin, run the following command in your Windows terminal:
+            <code className="block bg-gray-200 p-2 mt-2">
+              powercfg /batteryreport /output "C:\battery-report.html"
+            </code>
+            Once the file is generated, upload it below. You can find the file in your Local Disk (C:).
           </p>
 
-          <Input type="file" accept=".html" onChange={handleFileChange} />
-          <Button onClick={parseBatteryReport}>Calculate Health</Button>
+          <Input
+            type="file"
+            accept=".html"
+            onChange={handleFileChange}
+            className="w-full cursor-pointer"
+            placeholder="Upload Battery Report"
+            aria-label="Upload Battery Report"
+            aria-describedby="battery-report-upload"
+          />
+
+          <Button onClick={parseBatteryReport} className="w-full mt-4">
+            Calculate Health
+          </Button>
 
           {health !== null && (
-            <div className="text-green-700 font-semibold text-lg">
+            <div className="text-green-700 font-semibold text-lg mt-4">
               Battery Health: {health}%
             </div>
           )}
 
-          {error && <div className="text-red-600">{error}</div>}
+          {error && <div className="text-red-600 mt-2">{error}</div>}
         </CardContent>
       </Card>
     </div>
