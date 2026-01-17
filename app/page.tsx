@@ -77,7 +77,7 @@ export default function BatteryHealthChecker() {
             <code className="block bg-gray-200 p-2 mt-2 mb-2">
               system_profiler SPPowerDataType &gt; battery-report.txt
             </code>
-            Once the file is generated, upload it below. Supported files: <b>battery-report.html</b> (Windows) or <b>battery-report.txt</b> (Mac).
+            Once the file is generated, -upload it below. Supported files: <b>battery-report.html</b> (Windows) or <b>battery-report.txt</b> (Mac).
           </p>
 
           <Input
