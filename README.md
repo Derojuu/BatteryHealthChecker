@@ -1,10 +1,10 @@
 # Battery Health Checker 🔋
 
-A modern web application built with Next.js that helps you check your Windows laptop's battery health by analyzing PowerCfg battery reports.
+A modern web application built with Next.js that helps you check your laptop's battery health by analyzing battery reports from Windows (PowerCfg) and Mac (system_profiler).
 
 ## 📖 Overview
 
-The Battery Health Checker is a user-friendly web application that calculates your laptop battery's health percentage by parsing Windows PowerCfg battery reports. It provides an intuitive interface to upload your battery report and instantly see your battery's current health status.
+The Battery Health Checker is a user-friendly web application that calculates your laptop battery's health percentage by parsing Windows PowerCfg battery reports or Mac system_profiler battery reports. It provides an intuitive interface to upload your battery report and instantly see your battery's current health status.
 
 ## ✨ Features
 
@@ -12,14 +12,15 @@ The Battery Health Checker is a user-friendly web application that calculates yo
 - **Accurate Health Calculation**: Calculates battery health percentage based on design capacity vs full charge capacity
 - **Modern UI**: Clean, responsive design built with Tailwind CSS and shadcn/ui components
 - **Error Handling**: Comprehensive error messages for invalid files or parsing issues
-- **Windows Integration**: Works seamlessly with Windows PowerCfg battery reports
+- **Windows & Mac Integration**: Works seamlessly with Windows PowerCfg battery reports and Mac system_profiler battery reports
 
 ## 🚀 Getting Started
+
 
 ### Prerequisites
 
 - Node.js 18+ and npm
-- Windows operating system (for generating battery reports)
+- Windows or Mac operating system (for generating battery reports)
 
 ### Installation
 
@@ -50,15 +51,24 @@ npm start
 
 ## 🔧 How to Use
 
+
 ### Step 1: Generate Battery Report
+
+#### For Windows:
 Run this command in Windows PowerShell or Command Prompt:
 ```cmd
 powercfg /batteryreport /output "C:\battery-report.html"
 ```
 
+#### For Mac:
+Run this command in Terminal:
+```sh
+system_profiler SPPowerDataType > battery-report.txt
+```
+
 ### Step 2: Upload and Analyze
 1. Open the Battery Health Checker web application
-2. Click "Choose File" and select the generated `battery-report.html` file
+2. Click "Choose File" and select the generated `battery-report.html` (Windows) or `battery-report.txt` (Mac) file
 3. Click "Calculate Health" to get your battery health percentage
 4. View your battery health percentage and any relevant warnings
 
@@ -112,8 +122,8 @@ battery-health-checker/
 
 ## 🔍 How It Works
 
-1. **File Upload**: Users upload their PowerCfg battery report HTML file
-2. **Text Parsing**: The application extracts "DESIGN CAPACITY" and "FULL CHARGE CAPACITY" values
+1. **File Upload**: Users upload their PowerCfg battery report HTML file (Windows) or system_profiler text file (Mac)
+2. **Text Parsing**: The application extracts "DESIGN CAPACITY" and "FULL CHARGE CAPACITY" values (Windows) or "Design Capacity" and "Full Charge Capacity" (Mac)
 3. **Health Calculation**: Battery health = (Full Charge Capacity / Design Capacity) × 100
 4. **Result Display**: Shows the calculated percentage with appropriate styling
 
@@ -133,8 +143,8 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ### Common Issues
 
-- **"Capacity values not found"**: Ensure you're uploading a valid PowerCfg battery report
-- **"Failed to read or parse"**: Check that the file isn't corrupted and is in HTML format
+- **"Capacity values not found"**: Ensure you're uploading a valid PowerCfg (Windows) or system_profiler (Mac) battery report
+- **"Failed to read or parse"**: Check that the file isn't corrupted and is in the correct format (HTML for Windows, TXT for Mac)
 - **No file selected**: Make sure to select a file before clicking "Calculate Health"
 
 ### Getting Help

@@ -23,10 +23,19 @@ export default function BatteryHealthChecker() {
 
     try {
       const text = await reportFile.text();
-      const designCapacityMatch = text.match(/DESIGN CAPACITY\s*([^\n]*)/i);
-      const fullChargeCapacityMatch = text.match(/FULL CHARGE CAPACITY\s*([^\n]*)/i);
+      // Try Windows PowerCfg HTML report first
+      let designCapacityMatch = text.match(/DESIGN CAPACITY\s*([^\n]*)/i);
+      let fullChargeCapacityMatch = text.match(/FULL CHARGE CAPACITY\s*([^\n]*)/i);
+
+      // If not found, try Mac system_profiler TXT report
+      if (!designCapacityMatch || !fullChargeCapacityMatch) {
+        // Mac: look for lines like "  Design Capacity: 5263 mAh" and "  Full Charge Capacity: 4200 mAh"
+        designCapacityMatch = text.match(/Design Capacity:\s*(\d+)/i);
+        fullChargeCapacityMatch = text.match(/Full Charge Capacity:\s*(\d+)/i);
+      }
 
       if (designCapacityMatch && fullChargeCapacityMatch) {
+        // For Mac, match[1] is the number; for Windows, match[1] is the string with number and unit
         const designCapacity = parseCapacity(designCapacityMatch[1]);
         const fullChargeCapacity = parseCapacity(fullChargeCapacityMatch[1]);
 
@@ -60,16 +69,20 @@ export default function BatteryHealthChecker() {
 
         <CardContent className="space-y-6">
           <p className="text-sm text-gray-600">
-            To begin, run the following command in your Windows terminal:
-            <code className="block bg-gray-200 p-2 mt-2">
+            <strong>For Windows:</strong> Run this command in your terminal:<br />
+            <code className="block bg-gray-200 p-2 mt-2 mb-2">
               powercfg /batteryreport /output "C:\battery-report.html"
             </code>
-            Once the file is generated, upload it below. You can find the file in your Local Disk (C:).
+            <strong>For Mac:</strong> Run this command in your terminal:<br />
+            <code className="block bg-gray-200 p-2 mt-2 mb-2">
+              system_profiler SPPowerDataType &gt; battery-report.txt
+            </code>
+            Once the file is generated, upload it below. Supported files: <b>battery-report.html</b> (Windows) or <b>battery-report.txt</b> (Mac).
           </p>
 
           <Input
             type="file"
-            accept=".html"
+            accept=".html,.txt"
             onChange={handleFileChange}
             className="w-full cursor-pointer"
             placeholder="Upload Battery Report"
@@ -81,8 +94,20 @@ export default function BatteryHealthChecker() {
             Calculate Health
           </Button>
 
+
           {health !== null && (
-            <div className="text-green-700 font-semibold text-lg mt-4">
+            <div
+              className={
+                `font-semibold text-lg mt-4 ` +
+                (health >= 90
+                  ? "text-green-700"
+                  : health >= 70
+                  ? "text-yellow-500"
+                  : health >= 60
+                  ? "text-orange-500"
+                  : "text-red-600")
+              }
+            >
               Battery Health: {health}%
             </div>
           )}
