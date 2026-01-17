@@ -71,7 +71,7 @@ export default function BatteryHealthChecker() {
           <p className="text-sm text-gray-600">
             <strong>For Windows:</strong> Run this command in your terminal:<br />
             <code className="block bg-gray-200 p-2 mt-2 mb-2">
-              powercfg /batteryreport /output "C:\battery-report.html"
+              powercfg /batteryreport /output &quot;C:\battery-report.html&quot;
             </code>
             <strong>For Mac:</strong> Run this command in your terminal:<br />
             <code className="block bg-gray-200 p-2 mt-2 mb-2">
